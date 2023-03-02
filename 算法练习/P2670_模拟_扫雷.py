@@ -12,43 +12,24 @@
 # 1*1
 # 输入
 
-n, m = [int(i) for i in input().split(' ')]
-a = [['' for col in range(m+2)] for row in range(n+2)]
+# 思路：按行列生成一个二维数组当地图，标记地雷，如果是*，标记成1，然后挨个格子遍历，把他周围一圈的地雷数加起来
+# 一点小技巧：为了便于计算，给地图外围加了一圈0，就不用考虑out index的问题了
+# 第一遍30分，是生成了俩二维数组，把输入数据灌进去，再看是地雷的算0，周围其他格子+1，这样会导致地雷的格子也加入计算，最后无法判断
+n, m = [int(i) for i in input().split()]
 b = [[0 for col in range(m+2)] for row in range(n+2)]
 
 for i in range(1,n+1):
-    _s = input()
+    _s = input().strip()
     for j in range(1,m+1):
-        a[i][j] = _s[j-1]
-print(a)
-print(b)
+        if _s[j-1] == '*':
+            b[i][j] = 1
+
 # 计算
 for i in range(1,n+1):
     for j in range(1, m+1):
-        if a[i][j] == '*' :
-
-            # 上一行
-            b[i - 1][j - 1] += 1
-            b[i - 1][j] += 1
-            b[i - 1][j + 1] += 1
-
-            # 当前行
-            b[i][j - 1] += 1
-            b[i][j] = -1
-            b[i][j + 1] += 1
-
-            # 下一行
-            b[i + 1][j - 1] += 1
-            b[i + 1][j] += 1
-            b[i + 1][j + 1] += 1
-
-print(b)
-
-# 输出
-for i in range(1,n+1):
-    for j in range(1,m+1):
-        if b[i][j] == -1:
+        if b[i][j] == 1:
             print('*', end='')
         else:
-            print(b[i][j], end='')
+            n = b[i - 1][j - 1]+b[i - 1][j]+b[i - 1][j + 1]+b[i][j - 1]+b[i][j + 1]+b[i + 1][j - 1]+b[i + 1][j]+b[i + 1][j + 1]
+            print(n,end='')
     print()

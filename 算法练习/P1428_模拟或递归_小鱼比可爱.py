@@ -1,3 +1,17 @@
+# 洛谷题解的思路，C++可pass
+n = int(input())
+cute = [int(i) for i in input().split()]
+# 借助数组
+count = [0]*n
+for i in range(n): #枚举N条鱼
+    for j in range(i,-1,-1): #倒着往前数，注意不是到0，是-1
+        if cute[j] < cute[i]:
+            count[i] += 1 # 计数数组对应的位置记录值
+
+# 用这个方法拼接数组元素
+print(" ".join(str(i) for i in count))
+
+
 # 递归-诚哥
 res = []
 def fun(array):
@@ -17,6 +31,7 @@ arr = [int(i) for i in input().split()]
 fun(arr)
 for i in res[::-1]:
     print(i, end=' ')
+
 # 普通方式
 # n = int(input())
 # ipt = input().split(' ')
